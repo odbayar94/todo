@@ -1,11 +1,11 @@
 services:
   todo-fe:
-    build: ./fe
+    build: ./frontend
     ports:
-      - "9000:80"
+      - "89:80"
 
   todo-be:
-    build: ./be
+    build: ./backend
     links:
       - "todo-db"
     ports:
@@ -14,7 +14,7 @@ services:
   todo-db:
     image: mongo:latest
     volumes:
-      - /home/qlio/leap2k20/todo-project/mongo-datas:/data/db
+      - H:\001_MyData\07_Learning\02_NEST_LEAP4\src\projects\todo-db:/data/db
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
