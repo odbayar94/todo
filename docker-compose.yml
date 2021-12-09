@@ -1,0 +1,20 @@
+services:
+  todo-fe:
+    build: ./fe
+    ports:
+      - "9000:80"
+
+  todo-be:
+    build: ./be
+    links:
+      - "todo-db"
+    ports:
+      - "3000:3000"
+
+  todo-db:
+    image: mongo:latest
+    volumes:
+      - /home/qlio/leap2k20/todo-project/mongo-datas:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
