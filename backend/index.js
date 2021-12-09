@@ -2,7 +2,7 @@ import express from "express";
 import { MongoClient, ObjectId } from "mongodb";
 
 const client = new MongoClient(
-  "mongodb://root:root@172.29.80.1:8080?authSource=admin"
+  "mongodb://root:root@todo-db:27017?authSource=admin"
 );
 const database = client.db("todos");
 
