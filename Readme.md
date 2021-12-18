@@ -63,6 +63,8 @@ npm install
 node index.js
 ```
 
+![backend project run](https://i.ibb.co/3RxpDWN/step4.png)
+
 ## 3. Back-end төслөө эхлүүлж, local орчинд ажлуулах
 
 backend хавтас дотор terminal дээр доорх командыг ажлуулна.
@@ -82,7 +84,7 @@ docker build . -t backendtodo:v1
 
 #### Docker container ажлуулах
 
-үүсгэсэн image-с docker container-ийг ажлуулна. Энд MongoDB docker run хийхтэй адилхан тул командын тайлбарыг оруулахгүй орхилоо.
+Үүсгэсэн image-с docker container-ийг ажлуулна. MongoDB docker run хийхтэй адилхан тул командын тайлбарыг оруулахгүй орхилоо.
 
 ```bash
 docker run --name todobackend -p 3000:3000 backendtodo:v1
@@ -94,6 +96,7 @@ hub.docker.com руу нэвтрэнэ. Хэрэв танд бүртгэл ба�
 Бүртгүүлсний дараа **Create Repository** дарж repo үүсгэнэ.
 
 ![step1](https://i.ibb.co/ZcyBSrx/step1.png)
+
 <br/>
 <br/>
 Repository-ийн нэрийг оруулна. Public-аар үүсгэж байгаа тохиолдолд үнэгүй байдаг. Манай жишээ нь дээр todo-backend нэртэй docker repository үүсгэсэн.
@@ -102,16 +105,38 @@ Repository-ийн нэрийг оруулна. Public-аар үүсгэж бай
 <br/>
 <br/>
 Repository-г амжилттай үүсгэсэн тохиолдолд дараах хэсэг гарч ирнэ.
+
 ![step3](https://i.ibb.co/bPWsWvm/step3.png)
+
+### 3.1 Docker image-ийг Docker Hub дээр байршуулах
+
+Local орчинд үүсгэсэн image-ийг docker hub дээрх repository-ийн нэрээр нэрлэнэ.
+
+```bash
+docker tag odbayar94/todo-backend todo-backend:v1
+```
+
+#### Командын тайлбар
+
+- **odbayar94/todo-backend** нэрлэх image
+- **todo-backend:v1** local image-ийн нэр tag
+
+```bash
+docker push odbayar94/todo-backend
+```
+
+![push docker](https://i.ibb.co/YP1rh9V/step5.png)
 
 ### 3.2 Docker Hub дээрх image-ийг ашиглаж docker container ажлуулах
 
 Доорх командыг terminal дээр ажлуулна. Docker hub дээрх image-ыг татаж docker container-г ажлуулна.
 
 ```bash
-docker run -p 3000:3000 odbayar94/todo-backend:v1
+docker run -p 3000:3000 odbayar94/todo-backend
 ```
 
 #### Командын тайлбар
 
-- odbayar94/todo-backend:v1 энэ хэсэг нь хаанаас image татаж container-ийг ажлуулах вэ гэдгийг заана. **odbayar94** docker hub дээр таны хэрэглэгчийн нэр. **todo-backend** image-ийн нэр. **v1** image-ийн tag.
+- odbayar94/todo-backend энэ хэсэг нь хаанаас image татаж container-ийг ажлуулах вэ гэдгийг заана. **odbayar94** docker hub дээр таны хэрэглэгчийн нэр. **todo-backend** image-ийн нэр.
+
+![pull and run docker](https://i.ibb.co/jWwKQK8/step6.png)
