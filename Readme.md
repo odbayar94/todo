@@ -140,3 +140,66 @@ docker run -p 3000:3000 odbayar94/todo-backend
 - odbayar94/todo-backend энэ хэсэг нь хаанаас image татаж container-ийг ажлуулах вэ гэдгийг заана. **odbayar94** docker hub дээр таны хэрэглэгчийн нэр. **todo-backend** image-ийн нэр.
 
 ![pull and run docker](https://i.ibb.co/jWwKQK8/step6.png)
+
+## 6. Front-end, Back-end болон MongoDB-ээ docker composer ашиглан ажлуулах
+
+Аппликейшнд ашиглаж байгаа container-уудыг тус бүрд нь үүсгэж, асаалгүйгээр зөвхөн нэг командаар үүсгэж, ажлуулах боломжийг docker-composer олгоно. Docker Desktop суурилуулахад docker-composer хамт суудаг. Хэрэв таны компьютер дээр хараахан суугаагүй бол [docker hub](https://docs.docker.com/compose/install/)-с татаж авч суулгана уу.
+
+```bash
+dockerе-compose build
+```
+
+![docker-compose build](https://i.ibb.co/K6bpqfD/step7.png)
+
+```bash
+dockerе-compose up
+```
+
+![docker-compose up](https://i.ibb.co/MBJSRsL/step.png)
+
+```yml
+services:
+  todo-fe:
+    build: ./frontend
+    ports:
+      - "89:80"
+
+  todo-be:
+    build: ./backend
+    links:
+      - "todo-db"
+    ports:
+      - "3000:3000"
+
+  todo-db:
+    image: mongo:latest
+    volumes:
+      - H:\001_MyData\07_Learning\02_NEST_LEAP4\src\projects\todo-db:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+```
+
+Front-end dockerfile-ийн бүтэц
+
+```Dockerfile
+FROM alpine:3.15.0 as react
+
+WORKDIR /usr/src/react
+COPY . .
+RUN apk add --update nodejs npm && npm install -g yarn && yarn && yarn build
+
+FROM nginx:1.21.4-alpine
+RUN rm -rf /usr/share/nginx/html/*
+COPY --from=react /usr/src/react/build /usr/share/nginx/html
+```
+
+### Docker file-ийн тайлбар
+
+- **alpine:3.15.0** docker image ашиглана.
+- **WORKDIR** ажиллах хавтасын path-ийг заана. Хэрэв image-д тус хавтас байхгүй бол шинээр үүсгэнэ.
+- **COPY . .** source кодыг docker image рүү хуулна.
+- **RUN apk add --update nodejs npm && npm install -g yarn && yarn && yarn build** nodejs суулгаж project-ийг build хийнэ.
+- **FROM nginx:1.21.4-alpine** docker image ашиглаж, ningx сервер ажлуулна
+- **RUN rm -rf /usr/share/nginx/html/\*** nignx-ийн default running path нь **/usr/share/nginx/html/** байдаг тул тус хавтас доторхыг утсгана.
+- **COPY --from=react /usr/src/react/build /usr/share/nginx/html** үүсгэсэн react image дэх build хийсэн кодоо nginx-ийн running path руу бүхэлд нь хуулна.
