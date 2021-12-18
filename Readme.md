@@ -46,10 +46,10 @@ docker run -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=root
 
 #### Командын тайлбар
 
-- -e нь орчины тохиргоо бөгөөд MongoDB-ийн root хэрэглэгчийн нэр, нууц үгийг тохируулж байна. MONGO_INITDB_ROOT_USERNAME болон дээр тохиромжтой нэр нууц үг оруулна уу.
-- -p порт expose хийж байгаа үйлдэл. 27017 нь MongoDB-ийн үндсэн порт байдаг бөгөөд энэ тохиололд үндсэн серверийн 27018 портыг **conatiner**-ийн 27017 порттой холбож байна.
-- --name хэсэг нь container-ийн нэрийг онооно. Энэ хэсгийг оруулаагүй үед docker нь тухайн container-т санамсаргүй нэр оноодог.
-- mongo:latest хэсэг нь hub.docker.com дээрх MongoDB-ийн сүүлийн image-ийг авч байна ажлуулж байна. latest хэсэгт та өөрт тохирох хувилбарыг дугаарыг бичих боломжтой.
+- **-e** - нь орчины тохиргоо бөгөөд MongoDB-ийн root хэрэглэгчийн нэр, нууц үгийг тохируулж байна. MONGO_INITDB_ROOT_USERNAME болон дээр тохиромжтой нэр нууц үг оруулна уу.
+- **-p** - порт expose хийж байгаа үйлдэл. 27017 нь MongoDB-ийн үндсэн порт байдаг бөгөөд энэ тохиололд үндсэн серверийн 27018 портыг **conatiner**-ийн 27017 порттой холбож байна.
+- **--name** - хэсэг нь container-ийн нэрийг онооно. Энэ хэсгийг оруулаагүй үед docker нь тухайн container-т санамсаргүй нэр оноодог.
+- **mongo:latest** - хэсэг нь hub.docker.com дээрх MongoDB-ийн сүүлийн image-ийг авч байна ажлуулж байна. latest хэсэгт та өөрт тохирох хувилбарыг дугаарыг бичих боломжтой.
 
 ### Back-end төслөө эхлүүлэх
 
@@ -77,10 +77,10 @@ docker build . -t backendtodo:v1
 
 #### Командын тайлбар
 
-- **build** image үүсгэх
-- **.** Dockerfile файл байгаа замыг заана. Энэ тохиолдолд Dockerfile тухайн хавтсанд байга тул зөвхөн . бичнэ.
-- **-t backendtod** target image-ийн нэрийг заана.
-- **v1** image-ийн tag хэрэв оруулаагүй тохиолдолд latest болно.
+- **build** - image үүсгэх
+- **.** - Dockerfile файл байгаа замыг заана. Энэ тохиолдолд Dockerfile тухайн хавтсанд байга тул зөвхөн . бичнэ.
+- **-t backendtod** - target image-ийн нэрийг заана.
+- **v1** - image-ийн tag хэрэв оруулаагүй тохиолдолд latest болно.
 
 #### Docker container ажлуулах
 
@@ -118,8 +118,8 @@ docker tag odbayar94/todo-backend todo-backend:v1
 
 #### Командын тайлбар
 
-- **odbayar94/todo-backend** нэрлэх image
-- **todo-backend:v1** local image-ийн нэр tag
+- **odbayar94/todo-backend** - нэрлэх image
+- **todo-backend:v1** - local image-ийн нэр tag
 
 ```bash
 docker push odbayar94/todo-backend
@@ -182,14 +182,14 @@ services:
 
 ### docker-compose.yml файлийн тайлбар
 
-- **todo-fe** front-end сервисийн нэр.
-- **build: ./frontend** front-end-ийг үүсгэх Dockerfile-ийн path.
-- **ports: - "89:80"** local орчны 89 дугаар портыг 80 порт руу expose хийнэ.
-- **todo-be:** back-end сервисийн нэр.
-- **build: ./backend** back-end-ийг үүсгэх Dockerfile-ийн path.
-- **links: - "todo-db"** өгөгдлийн сантай сүлжээний холболт хийнэ.
-- **todo-db:** өгөгдлийн сангийн сервисийн нэр.
-- **volumes: - H:\todo-db:/data/db** docker container-ыг устгаад үүсгэхэд өгөгдлийн сангийн дата давхар устдаг тул өгөгдлийн сангийн датагаа хадгалж авна. Яг тохиргоогоор docker container дахин асаахад өгөгдлийн сангийн датаг ашиглах боломжтой болно.
+- **todo-fe** - front-end сервисийн нэр.
+- **build: ./frontend** - front-end-ийг үүсгэх Dockerfile-ийн path.
+- **ports: - "89:80"** - local орчны 89 дугаар портыг 80 порт руу expose хийнэ.
+- **todo-be:** - back-end сервисийн нэр.
+- **build: ./backend** - back-end-ийг үүсгэх Dockerfile-ийн path.
+- **links: - "todo-db"** - өгөгдлийн сантай сүлжээний холболт хийнэ.
+- **todo-db:** - өгөгдлийн сангийн сервисийн нэр.
+- **volumes: - H:\todo-db:/data/db** - docker container-ыг устгаад үүсгэхэд өгөгдлийн сангийн дата давхар устдаг тул өгөгдлийн сангийн датагаа хадгалж авна. Яг тохиргоогоор docker container дахин асаахад өгөгдлийн сангийн датаг ашиглах боломжтой болно.
 
 Front-end dockerfile-ийн бүтэц
 
@@ -207,10 +207,10 @@ COPY --from=react /usr/src/react/build /usr/share/nginx/html
 
 ### Dockerfile-ийн тайлбар
 
-- **alpine:3.15.0** docker image ашиглана.
-- **WORKDIR** ажиллах хавтасын path-ийг заана. Хэрэв image-д тус хавтас байхгүй бол шинээр үүсгэнэ.
-- **COPY . .** source кодыг docker image рүү хуулна.
-- **RUN apk add --update nodejs npm && npm install -g yarn && yarn && yarn build** nodejs суулгаж project-ийг build хийнэ.
-- **FROM nginx:1.21.4-alpine** docker image ашиглаж, ningx сервер ажлуулна
+- **alpine:3.15.0** - docker image ашиглана.
+- **WORKDIR** - ажиллах хавтасын path-ийг заана. Хэрэв image-д тус хавтас байхгүй бол шинээр үүсгэнэ.
+- **COPY . .** - source кодыг docker image рүү хуулна.
+- **RUN apk add --update nodejs npm && npm install -g yarn && yarn && yarn build** - NodeJS суулгаж project-ийг build хийнэ.
+- **FROM nginx:1.21.4-alpine** - docker image ашиглаж, ningx сервер ажлуулна
 - **RUN rm -rf /usr/share/nginx/html/\*** nignx-ийн default running path нь **/usr/share/nginx/html/** байдаг тул тус хавтас доторхыг утсгана.
-- **COPY --from=react /usr/src/react/build /usr/share/nginx/html** үүсгэсэн react image дэх build хийсэн файлаа nginx-ийн running path руу бүхэлд нь хуулна.
+- **COPY --from=react /usr/src/react/build /usr/share/nginx/html** - үүсгэсэн react image дэх build хийсэн файлаа nginx-ийн running path руу бүхэлд нь хуулна.
