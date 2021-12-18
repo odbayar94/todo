@@ -174,11 +174,22 @@ services:
   todo-db:
     image: mongo:latest
     volumes:
-      - H:\001_MyData\07_Learning\02_NEST_LEAP4\src\projects\todo-db:/data/db
+      - H:\todo-db:/data/db
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
 ```
+
+### docker-compose.yml файлийн тайлбар
+
+- **todo-fe** front-end сервисийн нэр.
+- **build: ./frontend** front-end-ийг үүсгэх Dockerfile-ийн path.
+- **ports: - "89:80"** local орчны 89 дугаар портыг 80 порт руу expose хийнэ.
+- **todo-be:** back-end сервисийн нэр.
+- **build: ./backend** back-end-ийг үүсгэх Dockerfile-ийн path.
+- **links: - "todo-db"** өгөгдлийн сантай сүлжээний холболт хийнэ.
+- **todo-db:** өгөгдлийн сангийн сервисийн нэр.
+- **volumes: - H:\todo-db:/data/db** docker container-ыг устгаад үүсгэхэд өгөгдлийн сангийн дата давхар устдаг тул өгөгдлийн сангийн датагаа хадгалж авна. Яг тохиргоогоор docker container дахин асаахад өгөгдлийн сангийн датаг ашиглах боломжтой болно.
 
 Front-end dockerfile-ийн бүтэц
 
@@ -194,7 +205,7 @@ RUN rm -rf /usr/share/nginx/html/*
 COPY --from=react /usr/src/react/build /usr/share/nginx/html
 ```
 
-### Docker file-ийн тайлбар
+### Dockerfile-ийн тайлбар
 
 - **alpine:3.15.0** docker image ашиглана.
 - **WORKDIR** ажиллах хавтасын path-ийг заана. Хэрэв image-д тус хавтас байхгүй бол шинээр үүсгэнэ.
@@ -202,4 +213,4 @@ COPY --from=react /usr/src/react/build /usr/share/nginx/html
 - **RUN apk add --update nodejs npm && npm install -g yarn && yarn && yarn build** nodejs суулгаж project-ийг build хийнэ.
 - **FROM nginx:1.21.4-alpine** docker image ашиглаж, ningx сервер ажлуулна
 - **RUN rm -rf /usr/share/nginx/html/\*** nignx-ийн default running path нь **/usr/share/nginx/html/** байдаг тул тус хавтас доторхыг утсгана.
-- **COPY --from=react /usr/src/react/build /usr/share/nginx/html** үүсгэсэн react image дэх build хийсэн кодоо nginx-ийн running path руу бүхэлд нь хуулна.
+- **COPY --from=react /usr/src/react/build /usr/share/nginx/html** үүсгэсэн react image дэх build хийсэн файлаа nginx-ийн running path руу бүхэлд нь хуулна.
