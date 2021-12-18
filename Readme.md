@@ -44,7 +44,7 @@
 docker run -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=root -p 27017:27017 --name todo-mongo mongo:latest
 ```
 
-#### Компандын тайлбар
+#### Командын тайлбар
 
 - -e нь орчины тохиргоо бөгөөд MongoDB-ийн root хэрэглэгчийн нэр, нууц үгийг тохируулж байна. MONGO_INITDB_ROOT_USERNAME болон дээр тохиромжтой нэр нууц үг оруулна уу.
 - -p порт expose хийж байгаа үйлдэл. 27017 нь MongoDB-ийн үндсэн порт байдаг бөгөөд энэ тохиололд үндсэн серверийн 27018 портыг **conatiner**-ийн 27017 порттой холбож байна.
